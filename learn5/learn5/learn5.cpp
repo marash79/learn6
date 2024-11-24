@@ -3,10 +3,47 @@
 
 #include <iostream>
 
-int main(int argc,char* args[])
+
+struct RuggedArray
 {
-    for (int i = 0; i < argc; i++)
-        printf_s("Arg [%i] - %s", i, args[i]);
+    int** data = NULL;
+    int rows = 0;
+    int* cols = NULL;
+};
+
+void freearr(int** arr, int rows)
+{
+    for (int i = 0; i < rows; i++)
+        free(arr[i]);
+}
+
+int main(int argc,char** args)
+{
+    
+    RuggedArray mas;
+    scanf_s("%i", &mas.rows);
+    mas.data = (int**)malloc(sizeof(int*) * mas.rows);// array of mas.rows pointers to pointers 
+    mas.cols = (int*)malloc(sizeof(int) * mas.rows);//array of mas.rows pointers to columns  
+    for (int i = 0; i < mas.rows; i++)
+    {
+        scanf_s("%i", &mas.cols[i]);
+        mas.data[i] = (int*)malloc(sizeof(int) * mas.cols[i]);
+    }
+ 
+    for (int i = 0; i < mas.rows; i++)
+        for (int j = 0; j < mas.cols[i]; j++)
+            mas.data[i][j] = rand() % 100;
+
+    for (int i = 0; i < mas.rows; i++)
+    {
+        for (int j = 0; j < mas.cols[i]; j++)
+            printf_s("%3i", mas.data[i][j]);
+        printf_s("\n");
+    }
+    for (int i = 0; i < mas.rows; i++)
+        free(mas.data[i]);
+    free(mas.data);
+    free(mas.cols);
 
     return 0;
 }
