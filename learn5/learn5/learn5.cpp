@@ -8,7 +8,6 @@ struct RuggedArray
 {
     int** data = NULL;
     int rows = 0;
-    int* cols = NULL;
 };
 
 void freearr(int** arr, int rows)
@@ -16,34 +15,38 @@ void freearr(int** arr, int rows)
     for (int i = 0; i < rows; i++)
         free(arr[i]);
 }
-
+#define TERMINAL_VALUE -1
 int main(int argc,char** args)
 {
     
     RuggedArray mas;
     scanf_s("%i", &mas.rows);
     mas.data = (int**)malloc(sizeof(int*) * mas.rows);// array of mas.rows pointers to pointers 
-    mas.cols = (int*)malloc(sizeof(int) * mas.rows);//array of mas.rows pointers to columns  
+      
     for (int i = 0; i < mas.rows; i++)
     {
-        scanf_s("%i", &mas.cols[i]);
-        mas.data[i] = (int*)malloc(sizeof(int) * mas.cols[i]);
+        int cols;
+        scanf_s("%i", &cols);
+        mas.data[i] = (int*)malloc(sizeof(int) * (cols+1));
+        for (int j = 0; j < cols; j++)
+            mas.data[i][j] = 0;
+        mas.data[i][cols] = TERMINAL_VALUE;
     }
  
     for (int i = 0; i < mas.rows; i++)
-        for (int j = 0; j < mas.cols[i]; j++)
+        for (int j = 0; mas.data[i][j]!= TERMINAL_VALUE; j++)
             mas.data[i][j] = rand() % 100;
 
     for (int i = 0; i < mas.rows; i++)
     {
-        for (int j = 0; j < mas.cols[i]; j++)
+        for (int j = 0; mas.data[i][j] != TERMINAL_VALUE; j++)
             printf_s("%3i", mas.data[i][j]);
         printf_s("\n");
     }
     for (int i = 0; i < mas.rows; i++)
         free(mas.data[i]);
     free(mas.data);
-    free(mas.cols);
+
 
     return 0;
 }
