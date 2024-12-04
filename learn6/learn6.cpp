@@ -1,20 +1,48 @@
-// learn6.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 
 #include <iostream>
+#include "Queue.h"
+
+void loop()
+{
+    Queue myq;
+    int choice;
+    
+    while (true)
+    {
+        int tmp;
+        printf("Choose 1- add element;2-remove element;3-exit;4-Clear\n");
+        do
+        {
+            scanf_s("%i", &choice);
+        } while (choice < 1 || choice>4);
+
+        switch (choice)
+        {
+        case 1:
+            printf("Enter the valuez");
+            scanf_s("%i", &tmp);
+            push(myq, tmp);
+            break;
+
+        case 2:
+            tmp = pull(myq);
+            printf("removed element %i\n", tmp);
+            break;
+        case 4:
+            clearQueue(myq);
+            break;
+        case 3:
+            return;
+       
+        }
+        print(myq);
+    }   
+
+}
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    loop();
+    system("pause");
+    return 0;
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
