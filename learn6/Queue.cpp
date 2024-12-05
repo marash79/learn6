@@ -2,6 +2,7 @@
 #include"Queue.h"
 #include<iostream>
 
+
 void push(Queue& q, int d)
 {
 	Element* e = (Element*)malloc(sizeof(Element));
@@ -51,7 +52,7 @@ int print(const Queue& q)
 	return 0;
 }
 
-void clearQueue(Queue& q)
+void clear(Queue& q)
 {
 	while (q.head != nullptr)
 	{
@@ -66,20 +67,32 @@ bool isEmpty(const Queue& q)
 	return q.head;
 }
 
-void cloneQueue(Queue& q1, const Queue& q2)
+//Element* copyElement(Element& e)
+//{
+//	Element* ecpy = (Element*)malloc(sizeof(Element));
+//	ecpy->data = e.data;
+//	return 
+//}
+
+void clone(Queue& q1, const Queue& q2)
 {
-	q1.head = q2.head;
-	q1.tail = q2.tail;
+	for (Element* curr = q2.head; curr != nullptr; curr = curr->next)
+	{
+		Element* enew = (Element*)malloc(sizeof(Element));
+		enew->data = curr->data;
+		enew->index = q1.tail->index + 1;
+		enew->next = nullptr;
+		q1.tail = enew;
+	}
 }
 
-void attachQueue(Queue& q1, const Queue& q2)
+void attach(Queue& q1, const Queue& q2)
 {
 	if (q1.head == nullptr)
-		cloneQueue(q1, q2);
+		clone(q1, q2);
 	else
 	{
 		q1.tail->next = q2.head;
 		q1.tail = q2.tail;
 	}
-
 }
