@@ -29,7 +29,7 @@ void loop()
             printf("removed element %i\n", tmp);
             break;
         case 4:
-            clearQueue(myq);
+            clear(myq);
             break;
         case 3:
             return;
