@@ -1,10 +1,10 @@
 
 #include <iostream>
-#include "Queue.h"
+#include "Stack.h"
 
 void loop()
 {
-    Queue myq;
+    Stack myq;
     int choice;
     
     while (true)
@@ -39,6 +39,8 @@ void loop()
     }   
 
 }
+
+
 
 int main()
 {

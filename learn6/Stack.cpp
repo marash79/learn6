@@ -1,59 +1,35 @@
 #pragma once
-#include"Queue.h"
+#include"Stack.h"
 #include<iostream>
 
 
-void push(Queue& q, int d)
+void push(Stack& q, int d)
 {
 	Element* e = (Element*)malloc(sizeof(Element));
 	e->data = d;
-	e->next = nullptr;
-	if (q.head == nullptr)
-	{
-		q.head = e;
-		q.tail = e;
-	}
-	else
-	{
-		q.tail->next = e;
-		q.tail = e;
-	}
+	e->next = q.head;
+	q.head = e;
 }
 
-int pull(Queue& q)
+int pull(Stack& q)
 {
-	if (q.head == nullptr) return 0;
-	int res = q.head->data;
-
-	if (q.head == q.tail)
-		q.tail = nullptr;
-	
+	int d = q.head->data;
 	Element* e = q.head;
 	q.head = q.head->next;
-
 	free(e);
-	return res;
+	return d;	
 }
 
-int print(const Queue& q)
+int print(const Stack& q)
 {
-	if (q.head != nullptr)
-	{
-		//Element* curr = q.head;
-		//do
-		//{
-		//	printf("%i - ", curr->data);
-		//	curr = curr->next;
-		//} while (curr->next != nullptr);
-		//printf("\b\b\n");
 		for (Element* curr = q.head; curr != nullptr; curr = curr->next)
-			printf("%i - ", curr->data);
-		printf("\b\b\n");
-	}
+			printf("%i -> ", curr->data);
+		printf("\b\b\b\n");
+
 	return 0;
 }
 
-void clear(Queue& q)
+void clear(Stack& q)
 {
 	while (q.head != nullptr)
 	{
@@ -63,22 +39,22 @@ void clear(Queue& q)
 	}
 }
 
-bool isEmpty(const Queue& q)
+bool isEmpty(const Stack& q)
 {
 	return q.head;
 }
 
-void indexQ(Queue q)
+void indexQ(Stack q)
 {
 	int idx=0;
 	for (Element* e = q.head; e != nullptr; e = e->next)
 	{
 		e->index = idx++;
 	}
-	q.maxindex = idx;
+	
 }
 
-void clone(Queue& q1, const Queue& q2)// Clone Q2 to Q1
+void clone(Stack& q1, const Stack& q2)// Clone Q2 to Q1
 {
 	if (q1.head = nullptr)//if destination is empty
 		attach(q1, q2);
@@ -116,7 +92,7 @@ void clone(Queue& q1, const Queue& q2)// Clone Q2 to Q1
 	indexQ(q1);
 } 
 
-void attach(Queue& q1, const Queue& q2)//attach Q2 to Q1
+void attach(Stack& q1, const Stack& q2)//attach Q2 to Q1
 {
 	if (q2.head == nullptr)//if attached queue is empty exit without anythng
 		return;
@@ -143,7 +119,7 @@ void attach(Queue& q1, const Queue& q2)//attach Q2 to Q1
 	indexQ(q1);
 }
 
-void insert(Queue& q, int d, int beforeIndex)//insert member before index, insert after the last if given -1
+void insert(Stack& q, int d, int beforeIndex)//insert member before index, insert after the last if given -1
 {
 
 	if (beforeIndex < -1||beforeIndex>q.tail->index+1)//return if given index out of range
@@ -185,7 +161,7 @@ void insert(Queue& q, int d, int beforeIndex)//insert member before index, inser
 	}
 }
 	
-void remove(Queue& q, int idx)//remove a member with given index
+void remove(Stack& q, int idx)//remove a member with given index
 {
 	Element* temp = q.head;
 	if (idx < 0||idx>q.tail->index+1) return;//out of range return with no work done
@@ -206,7 +182,7 @@ void remove(Queue& q, int idx)//remove a member with given index
 	free(temp);
 }
 
-int lookat(Queue& q, int idx)//return data on given index
+int lookat(Stack& q, int idx)//return data on given index
 {
 	if (idx < 0 || idx>q.tail->index) return;//out of range return with no work done
 	for (Element* curr = q.head; curr != nullptr; curr = curr->next)//lookup for all others cases
